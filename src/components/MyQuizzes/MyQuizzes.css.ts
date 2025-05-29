@@ -20,4 +20,10 @@ export const myQuizzesList = style({
     borderRadius: "8px",
     backgroundColor: themeContract.surfaceHover,
     boxShadow: `0 2px 4px ${themeContract.border}`,
+    '@media': {
+        "(max-width: 600px)": {
+            maxWidth: "320px",
+            margin: '0 auto',
+        },
+    }
 });

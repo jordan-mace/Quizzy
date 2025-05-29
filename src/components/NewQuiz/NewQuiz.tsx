@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import type { QuizData } from '../Quiz/QuizData.ts';
-import { newQuizContainer, newQuizTitle, newQuizDescription, quizQuestion, newQuizInput, newQuizButton } from './NewQuiz.css.ts';
+import { newQuizContainer, newQuizTitle, quizQuestion, newQuizInput, newQuizButton, quizTitleInput } from './NewQuiz.css.ts';
 
 function NewQuiz() {
     const [quizTitle, setQuizTitle] = useState('');
@@ -19,7 +19,6 @@ function NewQuiz() {
     const createQuiz = () => {
         //Save quiz as JSON to localStorage
         const quizData = {
-            id: `quiz-${Date.now()}`, // Unique ID based on timestamp
             title: quizTitle,
             description: quizDescription,
             questions: quizQuestions // Initialize with an empty array for questions
@@ -39,13 +38,14 @@ function NewQuiz() {
                 type="text"
                 placeholder="Quiz Title"
                 value={quizTitle}
+                className={quizTitleInput}
                 onChange={handleTitleChange}
             />
             <textarea
                 placeholder="Quiz Description"
                 value={quizDescription}
                 onChange={handleDescriptionChange}
-                className={newQuizDescription}
+                className={quizTitleInput}
             />
             <h2>Questions</h2>
             <div>
@@ -131,7 +131,7 @@ function NewQuiz() {
                     </div>
                 ))}
                 <button onClick={() => {
-                    setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [] }]);
+                    setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [], answer: '' }]);
                 }}>Add Question</button>
             </div>
 

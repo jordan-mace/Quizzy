@@ -21,9 +21,25 @@ export const newQuizForm = style({
     boxShadow: `0 2px 4px ${themeContract.border}`,
 });
 
-export const newQuizInput = style({
+export const quizTitleInput = style({
     marginBottom: "1rem",
     padding: "0.5rem",
+    resize: 'none',
+    borderRadius: "4px",
+    border: `1px solid ${themeContract.border}`,
+    fontSize: "1rem",
+    maxWidth: '1280px',
+    minWidth: '200px',
+    '@media': {
+        "(max-width: 600px)": {
+            width: "100%",
+        },
+    }
+});
+
+export const newQuizInput = style({
+    padding: "0.5rem",
+    margin: "0.5rem auto",
     borderRadius: "4px",
     border: `1px solid ${themeContract.border}`,
     fontSize: "1rem",
@@ -53,11 +69,10 @@ export const newQuizButton = style({
 
 export const quizQuestion = style({
     marginBottom: "1rem",
-    padding: "0.5rem",
+    padding: "1rem",
     borderRadius: "4px",
     border: `1px solid ${themeContract.border}`,
     fontSize: "1rem",
-    width: "100%",
 });
 
 

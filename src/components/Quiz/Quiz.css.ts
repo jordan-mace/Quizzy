@@ -20,23 +20,7 @@ export const quizItem = style({
 });
 
 export const quizButton = style({
-    padding: "0.5rem 1rem",
-    borderRadius: "4px",
-    backgroundColor: themeContract.primary,
-    color: themeContract.primaryContrast,
-    border: `1px solid ${themeContract.border}`,
-    cursor: "pointer",
-    transition: "background-color 0.3s, transform 0.2s",
-
-    ":hover": {
-        backgroundColor: themeContract.primaryHover,
-        transform: "scale(1.05)",
-    },
-
-    ":active": {
-        backgroundColor: themeContract.primaryActive,
-        transform: "scale(0.95)",
-    },
+    marginTop: "1rem",
 });
 
 export const quizTitle = style({

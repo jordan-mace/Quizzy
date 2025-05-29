@@ -4,14 +4,8 @@ import { DarkModeContext } from './DarkModeContext';
 import { darkStyle, lightStyle } from '../global.css';
 
 function DarkModeProvider({ children }: { children: React.ReactNode }) {
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
-    useEffect(() => {
-        const savedMode = sessionStorage.getItem('darkMode');
-        if (savedMode) {
-            setIsDarkMode(savedMode === 'true');
-        }
-    }, []);
+    const savedMode = sessionStorage.getItem('darkMode');
+    const [isDarkMode, setIsDarkMode] = useState(savedMode ? savedMode === 'true' : false);
 
     useEffect(() => {
         sessionStorage.setItem('darkMode', String(isDarkMode));

@@ -1,17 +1,17 @@
-import { quiz } from './Quiz.css.ts'
+import { quiz, quizItem, quizTitle } from './Quiz.css.ts'
 import { useParams } from 'react-router-dom'
 import type { QuizData } from './QuizData.ts'
 import { useEffect, useState } from 'react'
+import { quizButton } from './Quiz.css.ts'
 
 function Quiz() {
     //1. Extract the quiz data from the base64 encoded string in the URL
     const { data } = useParams<{ data: string }>()
     const decodedData = data ? atob(data) : null
     const parsedData: QuizData | null = decodedData ? JSON.parse(decodedData) : null
-
     const [chosenAnswers, setChosenAnswers] = useState<string[]>([])
-
     const [quizData, setQuizData] = useState<QuizData | null>(null)
+    const [score, setScore] = useState<number | null>(null)
 
     useEffect(() => {
         if (parsedData)
@@ -35,15 +35,16 @@ function Quiz() {
         //1. Compare the user's answers with the correct answers in quizData
         const correctAnswers = quizData.questions.map((question, index) => {
             if (question.questionType === 'text') {
-                return question.answer.toLowerCase() === chosenAnswers[index]?.toLowerCase();
+                return question.answer.toString().toLowerCase() === chosenAnswers[index]?.toLowerCase();
             } else {
-                return question.options[parseInt(chosenAnswers[index])] === question.answer;
+                const chosenOption = chosenAnswers[index];
+                return parseInt(chosenOption) === question.answer;
             }
         });
+
         //2. Display the results to the user
         const score = correctAnswers.filter(answer => answer).length;
-        alert(`You scored ${score} out of ${quizData.questions.length}`);
-        console.log(chosenAnswers);
+        setScore(score);
     }
 
     function setAnswer(questionIndex: number, answer: string) {
@@ -54,12 +55,12 @@ function Quiz() {
 
     return (
         <div className={quiz}>
-            <h1>{quizData.title}</h1>
+            <h1 className={quizTitle}>{quizData.title}</h1>
             <p>{quizData.description}</p>
             <div>
                 {quizData.questions.map((question, index) => (
-                    <div key={index}>
-                        <h2>{question.question}</h2>
+                    <div key={index} className={quizItem}>
+                        <p>{question.question}</p>
                         {question.questionType === 'text' ? (
                             <input type="text" placeholder="Your answer" onChange={(e) => setAnswer(index, e.target.value)} />
                         ) : (
@@ -75,10 +76,21 @@ function Quiz() {
                                 </div>
                             ))
                         )}
+                        {score !== null && (
+                            <p>
+                                Correct Answer: {question.questionType === 'text' ? question.answer : question.options[question.answer as number]}
+                            </p>
+                        )}
                     </div>
                 ))}
             </div>
-            <button onClick={checkAnswers}>Check Answers</button>
+            {score !== null && (
+                <div>
+                    <p>Your Score: {score} out of {quizData.questions.length}</p>
+                    <p>{(score / quizData.questions.length * 100).toFixed(2)}%</p>
+                </div>
+            )}
+            <button className={quizButton} onClick={checkAnswers}>Check Answers</button>
         </div>
     )
 }
