@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MyQuizzes from './components/MyQuizzes/MyQuizzes.tsx'
 import Quiz from './components/Quiz/Quiz.tsx'
 import NewQuiz from './components/NewQuiz/NewQuiz.tsx'
+import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -21,6 +23,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/quiz/:data" element={<Quiz />} />
         </Routes>
       </BrowserRouter>
+      <SpeedInsights />
+      <Analytics />
     </DarkModeProvider>
   </StrictMode >
 )
