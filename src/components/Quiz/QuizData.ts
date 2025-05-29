@@ -7,6 +7,6 @@ export type QuizData = {
         question: string;
         questionType: 'text' | 'multiple-choice';
         options: string[];
-        correctAnswer: number; // Index of the correct answer in the options array
+        answer: string | number;
     }[];
 };

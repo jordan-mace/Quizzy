@@ -71,27 +71,59 @@ function NewQuiz() {
                             <option value="text">Text</option>
                             <option value="multiple-choice">Multiple Choice</option>
                         </select>
-                        <textarea
-                            className={newQuizInput}
-                            placeholder="Options (comma separated)"
-                            value={question.options.join(', ')}
-                            onChange={(e) => {
-                                const newQuestions = [...quizQuestions];
-                                newQuestions[index].options = e.target.value.split(',').map(opt => opt.trim());
-                                setQuizQuestions(newQuestions);
-                            }}
-                        />
-                        <input
-                            className={newQuizInput}
-                            type="number"
-                            placeholder="Correct Answer Index (0-based)"
-                            value={question.correctAnswer}
-                            onChange={(e) => {
-                                const newQuestions = [...quizQuestions];
-                                newQuestions[index].correctAnswer = parseInt(e.target.value, 10);
-                                setQuizQuestions(newQuestions);
-                            }}
-                        />
+                        {question.questionType === 'multiple-choice' && (
+                            <div>
+                                <label>Options:</label>
+                                {question.options.map((option, optionIndex) => (
+                                    <input
+                                        key={optionIndex}
+                                        className={newQuizInput}
+                                        type="text"
+                                        placeholder={`Option ${optionIndex + 1}`}
+                                        value={option}
+                                        onChange={(e) => {
+                                            const newQuestions = [...quizQuestions];
+                                            newQuestions[index].options[optionIndex] = e.target.value;
+                                            setQuizQuestions(newQuestions);
+                                        }}
+                                    />
+                                ))}
+                                <button className={newQuizButton} onClick={() => {
+                                    const newQuestions = [...quizQuestions];
+                                    newQuestions[index].options.push('');
+                                    setQuizQuestions(newQuestions);
+                                }}>Add Option</button>
+                            </div>
+                        )}
+                        {question.questionType === 'multiple-choice' && (
+                            <input
+                                className={newQuizInput}
+                                type="number"
+                                placeholder="Correct Answer Index (0-based)"
+                                value={question.answer || ''}
+                                onChange={(e) => {
+                                    const newQuestions = [...quizQuestions];
+                                    const answerIndex = parseInt(e.target.value, 10);
+                                    if (!isNaN(answerIndex)) {
+                                        newQuestions[index].answer = answerIndex;
+                                    }
+                                    setQuizQuestions(newQuestions);
+                                }}
+                            />
+                        )}
+                        {question.questionType === 'text' && (
+                            <input
+                                className={newQuizInput}
+                                type="text"
+                                placeholder="Correct Answer"
+                                value={question.answer || ''}
+                                onChange={(e) => {
+                                    const newQuestions = [...quizQuestions];
+                                    newQuestions[index].answer = e.target.value;
+                                    setQuizQuestions(newQuestions);
+                                }}
+                            />
+                        )}
                         <button className={newQuizButton} onClick={() => {
                             const newQuestions = quizQuestions.filter((_, i) => i !== index);
                             setQuizQuestions(newQuestions);
@@ -99,7 +131,7 @@ function NewQuiz() {
                     </div>
                 ))}
                 <button onClick={() => {
-                    setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [], correctAnswer: 0 }]);
+                    setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [] }]);
                 }}>Add Question</button>
             </div>
 
