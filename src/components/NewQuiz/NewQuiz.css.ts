@@ -76,6 +76,12 @@ export const newQuizButton = style({
     },
 });
 
+export const buttonGroup = style({
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "1rem",
+})
+
 export const quizQuestion = style({
     display: "flex",
     flexDirection: "column",

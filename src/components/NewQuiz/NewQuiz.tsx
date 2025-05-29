@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import type { QuizData } from '../Quiz/QuizData.ts';
-import { newQuizContainer, newQuizTitle, quizQuestion, newQuizInput, newQuizButton, quizTitleInput, newQuizOption } from './NewQuiz.css.ts';
+import { newQuizContainer, newQuizTitle, quizQuestion, newQuizInput, newQuizButton, quizTitleInput, newQuizOption, buttonGroup } from './NewQuiz.css.ts';
 
 function NewQuiz() {
     const [quizTitle, setQuizTitle] = useState('');
@@ -29,6 +29,9 @@ function NewQuiz() {
         // Reset fields after creation
         setQuizTitle('');
         setQuizDescription('');
+        setQuizQuestions([]);
+
+        alert('Quiz created successfully!');
     };
 
     return (
@@ -90,11 +93,18 @@ function NewQuiz() {
                                             }}
                                         />
                                     ))}
-                                    <button className={newQuizButton} onClick={() => {
-                                        const newQuestions = [...quizQuestions];
-                                        newQuestions[index].options.push('');
-                                        setQuizQuestions(newQuestions);
-                                    }}>Add Option</button>
+                                    <div className={buttonGroup}>
+                                        <button className={newQuizButton} onClick={() => {
+                                            const newQuestions = [...quizQuestions];
+                                            newQuestions[index].options = newQuestions[index].options.filter((_, i) => i !== question.options.length - 1);
+                                            setQuizQuestions(newQuestions);
+                                        }}>Remove Option</button>
+                                        <button className={newQuizButton} onClick={() => {
+                                            const newQuestions = [...quizQuestions];
+                                            newQuestions[index].options.push('');
+                                            setQuizQuestions(newQuestions);
+                                        }}>Add Option</button>
+                                    </div>
                                 </div>
                             </>
                         )}
