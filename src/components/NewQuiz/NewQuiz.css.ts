@@ -21,6 +21,16 @@ export const newQuizForm = style({
     boxShadow: `0 2px 4px ${themeContract.border}`,
 });
 
+export const newQuizOption = style({
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1rem",
+    padding: "1rem",
+    borderRadius: "4px",
+    border: `1px solid ${themeContract.border}`,
+    fontSize: "1rem",
+});
+
 export const quizTitleInput = style({
     marginBottom: "1rem",
     padding: "0.5rem",
@@ -43,7 +53,6 @@ export const newQuizInput = style({
     borderRadius: "4px",
     border: `1px solid ${themeContract.border}`,
     fontSize: "1rem",
-    width: "100%",
 });
 
 export const newQuizButton = style({
@@ -68,8 +77,12 @@ export const newQuizButton = style({
 });
 
 export const quizQuestion = style({
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
     marginBottom: "1rem",
     padding: "1rem",
+    minWidth: "320px",
     borderRadius: "4px",
     border: `1px solid ${themeContract.border}`,
     fontSize: "1rem",

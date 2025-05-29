@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import type { QuizData } from '../Quiz/QuizData.ts';
-import { newQuizContainer, newQuizTitle, quizQuestion, newQuizInput, newQuizButton, quizTitleInput } from './NewQuiz.css.ts';
+import { newQuizContainer, newQuizTitle, quizQuestion, newQuizInput, newQuizButton, quizTitleInput, newQuizOption } from './NewQuiz.css.ts';
 
 function NewQuiz() {
     const [quizTitle, setQuizTitle] = useState('');
@@ -72,28 +72,31 @@ function NewQuiz() {
                             <option value="multiple-choice">Multiple Choice</option>
                         </select>
                         {question.questionType === 'multiple-choice' && (
-                            <div>
+                            <>
+
                                 <label>Options:</label>
-                                {question.options.map((option, optionIndex) => (
-                                    <input
-                                        key={optionIndex}
-                                        className={newQuizInput}
-                                        type="text"
-                                        placeholder={`Option ${optionIndex + 1}`}
-                                        value={option}
-                                        onChange={(e) => {
-                                            const newQuestions = [...quizQuestions];
-                                            newQuestions[index].options[optionIndex] = e.target.value;
-                                            setQuizQuestions(newQuestions);
-                                        }}
-                                    />
-                                ))}
-                                <button className={newQuizButton} onClick={() => {
-                                    const newQuestions = [...quizQuestions];
-                                    newQuestions[index].options.push('');
-                                    setQuizQuestions(newQuestions);
-                                }}>Add Option</button>
-                            </div>
+                                <div className={newQuizOption}>
+                                    {question.options.map((option, optionIndex) => (
+                                        <input
+                                            key={optionIndex}
+                                            className={newQuizInput}
+                                            type="text"
+                                            placeholder={`Option ${optionIndex + 1}`}
+                                            value={option}
+                                            onChange={(e) => {
+                                                const newQuestions = [...quizQuestions];
+                                                newQuestions[index].options[optionIndex] = e.target.value;
+                                                setQuizQuestions(newQuestions);
+                                            }}
+                                        />
+                                    ))}
+                                    <button className={newQuizButton} onClick={() => {
+                                        const newQuestions = [...quizQuestions];
+                                        newQuestions[index].options.push('');
+                                        setQuizQuestions(newQuestions);
+                                    }}>Add Option</button>
+                                </div>
+                            </>
                         )}
                         {question.questionType === 'multiple-choice' && (
                             <input
@@ -130,11 +133,11 @@ function NewQuiz() {
                         }}>Remove Question</button>
                     </div>
                 ))}
-                <button onClick={() => {
-                    setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [], answer: '' }]);
-                }}>Add Question</button>
             </div>
 
+            <button onClick={() => {
+                setQuizQuestions([...quizQuestions, { question: '', questionType: 'text', options: [], answer: '' }]);
+            }}>Add Question</button>
             <button type="submit" onClick={createQuiz}>Create Quiz</button>
         </div>
     );
